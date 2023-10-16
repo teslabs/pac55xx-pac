@@ -1,0 +1,148 @@
+transforms:
+    # ADC ----------------------------------------------------------------------
+    # ADC: INT
+    - !MakeFieldArray
+       fieldsets: adc::regs::Adcint
+       from: intf\d+
+       to: intf
+    - !MakeFieldArray
+       fieldsets: adc::regs::Adcint
+       from: adcirq\dif
+       to: adcirqif
+    # ADC: DTSETRIGENT*TO*
+    - !MergeEnums
+       from: adc::vals::Trig\d+edge
+       to: adc::vals::Trigedge
+    # ADC: DTSESEQCFG
+    - !MergeEnums
+       from: adc::vals::Dtseseqcfg\d+Emuxc
+       to: adc::vals::DtseseqcfgEmuxc
+    - !MakeRegisterArray
+       blocks: adc::Adc
+       from: dtseseqcfg\d+
+       to: dtseseqcfg
+    - !MergeFieldsets
+       from: adc::regs::Dtseseqcfg\d+
+       to: adc::regs::Dtseseqcfg
+    # ADC: DTSERES
+    - !MergeFieldsets
+       from: adc::regs::Dtseres\d+
+       to: adc::regs::Dtseres
+    - !MakeRegisterArray
+       blocks: adc::Adc
+       from: dtseres\d+
+       to: dtseres
+
+    # GPIO ---------------------------------------------------------------------
+    - !Rename
+       from: gpioa::(.*)
+       to: gpio::$1
+    - !Rename
+       from: gpio::Gpioa
+       to: gpio::Gpio
+
+    # GPIO: MODE|OUTMASK|OUT|IN|DOSET|DOCLEAR
+    - !MergeEnums
+       from: gpio::vals::P\d
+       to: gpio::vals::P
+    - !MakeFieldArray
+       fieldsets: gpio::regs::(Mode|Outmask|Out|In|Doset|Doclear)
+       from: p(.*)\d
+       to: p
+
+    # GPTIMER ------------------------------------------------------------------
+    - !Rename
+       from: gptimera::(.*)
+       to: gptimer::$1
+    - !Rename
+       from: gptimer::Gptimera
+       to: gptimer::Gptimer
+
+    # I2C ----------------------------------------------------------------------
+    - !MergeFieldsets
+       from: i2c::regs::Adr\d
+       to: i2c::regs::Adr
+    - !MergeFieldsets
+       from: i2c::regs::Adrm\d
+       to: i2c::regs::Adrm
+
+    # SCC ----------------------------------------------------------------------
+    # SCC: CCSCTL
+    - !MergeEnums
+       from: scc::vals::Us[a-d]mode
+       to: scc::vals::Usmode
+
+    # SCC: P[A-G]P[U|D]EN
+    - !MergeFieldsets
+       from: scc::regs::P[a-g]puen
+       to: scc::regs::Ppuen
+    - !MergeFieldsets
+       from: scc::regs::P[a-g]pden
+       to: scc::regs::Ppden
+    - !MakeFieldArray
+       fieldsets: scc::regs::Pp[u|d]en
+       from: p\d
+       to: p
+
+    # SCC: P[A-G]DS
+    - !MergeEnums
+       from: scc::vals::P[a-g]dsP\dds
+       to: scc::vals::Pds
+    - !MergeEnums
+       from: scc::vals::P[a-g]dsP\dst
+       to: scc::vals::Pst
+    - !MergeFieldsets
+       from: scc::regs::P[a-g]ds
+       to: scc::regs::Pds
+    - !MakeFieldArray
+       fieldsets: scc::regs::Pds
+       from: p\d(ds|st)
+       to: p$1
+
+    # SSP ----------------------------------------------------------------------
+    - !Rename
+       from: sspa::(.*)
+       to: ssp::$1
+    - !Rename
+       from: ssp::Sspa
+       to: ssp::Ssp
+
+    # TIMER --------------------------------------------------------------------
+    - !Rename
+       from: timera::(.*)
+       to: timer::$1
+    - !Rename
+       from: timer::Timera
+       to: timer::Timer
+    # TIMER: INT
+    - !MakeFieldArray
+       fieldsets: timer::regs::Int
+       from: ccr\dif
+       to: ccrif
+    # TIMER: CCTL
+    - !MergeEnums
+       from: timer::vals::Cctl\d(.*)
+       to: timer::vals::Cctl$1
+    - !MergeFieldsets
+       from: timer::regs::Cct(l|r)\d
+       to: timer::regs::Cct$1
+    - !MakeRegisterArray
+       blocks: timer::Timer
+       from: cct(l|r)\d
+       to: cct$1
+    # TIMER: DGCTL
+    - !MergeFieldsets
+       from: timer::regs::Dtgctl\d
+       to: timer::regs::Dtgctl
+    - !MakeRegisterArray
+       blocks: timer::Timer
+       from: dtgctl\d
+       to: dtgctl
+
+    # USART --------------------------------------------------------------------
+    - !Rename
+       from: usarta::(.*)
+       to: usart::$1
+    - !Rename
+       from: usart::Usarta
+       to: usart::Usart

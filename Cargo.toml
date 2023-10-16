@@ -1,0 +1,28 @@
+[package]
+name = "pac55xx-pac"
+authors = ["Gerard Marull-Paretas <gerard@teslabs.com>"]
+description = "Peripheral Access Crate (PAC) for PAC55XX"
+repository = "https://github.com/teslabs/pac55xx-pac"
+readme = "README.md"
+keywords = ["embedded", "no_std", "qorvo", "pac55xx"]
+categories = ["embedded", "no-std"]
+license = "MIT/Apache-2.0"
+edition = "2021"
+include = [
+  "src/*",
+  "build.rs",
+  "device.x",
+  "Cargo.toml",
+  "README.md",
+]
+version = "0.3.0"
+
+[dependencies]
+cortex-m = "0.7.7"
+cortex-m-rt = { version = ">=0.6.15,<0.8", optional = true }
+
+[features]
+rt = ["cortex-m-rt/device"]
+
+[workspace]
+members = ["chiptool"]

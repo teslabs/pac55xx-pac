@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-24.04
+    env: {"RUSTFLAGS": "-Dwarnings"}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          target: thumbv7em-none-eabihf
+
+      - name: Install dependencies
+        run: cargo install svdtools form
+
+      - name: Generate
+        run: make
+
+      - name: Check
+        run: cargo check --features=rt

@@ -1,0 +1,75 @@
+_svd: "PAC55XX.svd"
+
+# Adjust here description of arrayed registers/fields, so that generation always
+# generates zero-diff.
+
+_modify:
+  GPIO*:
+    description: "General Purpose Input/Output"
+  GPTIMER*:
+    description: "General Purpose Timer"
+  SSP*:
+    description: "Synchronous Serial Peripheral"
+  TIMER*:
+    description: "Timer"
+  USART*:
+    description: "Universal Synchronous Asynchronous Receive Transmit"
+
+ADC:
+  _modify:
+    DTSERES*:
+      description: "DTSE Result"
+    DTSESEQCFG*:
+      description: "DTSE Sequence Configuration"
+
+  ADCINT:
+    _modify:
+      ADCIRQ*IF:
+        description: "ADCIRQ Interrupt Flag"
+      INTF*[0-9]:
+        description: "DTSE Sequence Interrupt Flag"
+
+I2C:
+  _modify:
+    ADR*:
+      description: "I2C Slave Address"
+    ADRM*:
+      description: "I2C Slave Address Mask"
+
+SCC:
+  _modify:
+    P*DS:
+      description: "Drive Strength/Schmitt Trigger"
+    P*PUEN:
+      description: "Weak Pull-up Enable"
+    P*PDEN:
+      description: "Weak Pull-down Enable"
+
+  P*PUEN:
+    _modify:
+      P*:
+        description: "Weak Pull-up Enable"
+  P*PDEN:
+    _modify:
+      P*:
+        description: "Weak Pull-down Enable"
+  P*DS:
+    _modify:
+      P*DS:
+        description: "Drive Strength"
+      P*ST:
+        description: "Schmitt Trigger Enable"
+
+TIMER*:
+  _modify:
+   CCTL*:
+     description: "Timer CCR Control"
+   CCTR*:
+     description: "Timer CCR Counter"
+   DTGCTL*:
+     description: "Timer Dead-Time Generator Control"
+
+  INT:
+    _modify:
+     CCR*IF:
+       description: "CCR Interrupt Flag"
