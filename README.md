@@ -1,5 +1,8 @@
 # pac55xx-pac
 
+[![Crates.io Version](https://img.shields.io/crates/v/pac55xx-pac)](https://crates.io/crates/pac55xx-pac)
+[![docs.rs](https://img.shields.io/docsrs/pac55xx-pac)](https://docs.rs/pac55xx-pac/latest/pac55xx_pac)
+
 This is a [Peripheral Access Crate](https://rust-embedded.github.io/book/start/registers.html)
 for Qorvo PAC55XX microcontrollers.
 
